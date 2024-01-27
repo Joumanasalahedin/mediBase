@@ -24,28 +24,44 @@ $pat_sql = "SELECT id, name, birthdate, gender, email, mobile_phone
 
 $pat_result = mysqli_query($conn, $pat_sql);
 
+//TESTING
+if (isset($_POST['view_patient'])) {
+    $patient_id = $_POST['patient_id'];
+
+    // Fetch patient information from the database
+    $patient_info_query = "SELECT * FROM patients WHERE id = $patient_id";
+    $patient_info_result = mysqli_query($conn, $patient_info_query);
+
+    if ($patient_info = mysqli_fetch_assoc($patient_info_result)) {
+        // Store patient information in a variable to display in the popup
+        $patient_info_data = $patient_info;
+    } else {
+        $patient_info_data = null;
+    }
+}
+
 // Register a new Patient
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['register_patient'])) {
+        $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+        $birthdate = $_POST["birthdate"];
+        $gender = filter_input(INPUT_POST, "gender", FILTER_SANITIZE_SPECIAL_CHARS);
+        $nationality = filter_input(INPUT_POST, "nationality", FILTER_SANITIZE_SPECIAL_CHARS);
+        $health_insurance = filter_input(INPUT_POST, "health_insurance", FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+        $phone_no = filter_input(INPUT_POST, "phone_no", FILTER_SANITIZE_NUMBER_INT);
+        $emergency_name = filter_input(INPUT_POST, "emergency_name", FILTER_SANITIZE_SPECIAL_CHARS);
+        $emergency_no = filter_input(INPUT_POST, "emergency_no", FILTER_SANITIZE_NUMBER_INT);
+        $height = filter_input(INPUT_POST, "height", FILTER_SANITIZE_NUMBER_INT);
+        $weight = filter_input(INPUT_POST, "weight", FILTER_SANITIZE_NUMBER_INT);
+        $allergies = filter_input(INPUT_POST, "allergies", FILTER_SANITIZE_SPECIAL_CHARS);
+        $chronic_diseases = filter_input(INPUT_POST, "chronic_diseases", FILTER_SANITIZE_SPECIAL_CHARS);
+        $disabilities = filter_input(INPUT_POST, "disabilities", FILTER_SANITIZE_SPECIAL_CHARS);
+        $vaccines = filter_input(INPUT_POST, "vaccines", FILTER_SANITIZE_SPECIAL_CHARS);
+        $medications = filter_input(INPUT_POST, "medications", FILTER_SANITIZE_SPECIAL_CHARS);
 
-    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
-    $birthdate = $_POST["birthdate"];
-    $gender = filter_input(INPUT_POST, "gender", FILTER_SANITIZE_SPECIAL_CHARS);
-    $nationality = filter_input(INPUT_POST, "nationality", FILTER_SANITIZE_SPECIAL_CHARS);
-    $health_insurance = filter_input(INPUT_POST, "health_insurance", FILTER_SANITIZE_SPECIAL_CHARS);
-    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
-    $phone_no = filter_input(INPUT_POST, "phone_no", FILTER_SANITIZE_NUMBER_INT);
-    $emergency_name = filter_input(INPUT_POST, "emergency_name", FILTER_SANITIZE_SPECIAL_CHARS);
-    $emergency_no = filter_input(INPUT_POST, "emergency_no", FILTER_SANITIZE_NUMBER_INT);
-    $height = filter_input(INPUT_POST, "height", FILTER_SANITIZE_NUMBER_INT);
-    $weight = filter_input(INPUT_POST, "weight", FILTER_SANITIZE_NUMBER_INT);
-    $allergies = filter_input(INPUT_POST, "allergies", FILTER_SANITIZE_SPECIAL_CHARS);
-    $chronic_diseases = filter_input(INPUT_POST, "chronic_diseases", FILTER_SANITIZE_SPECIAL_CHARS);
-    $disabilities = filter_input(INPUT_POST, "disabilities", FILTER_SANITIZE_SPECIAL_CHARS);
-    $vaccines = filter_input(INPUT_POST, "vaccines", FILTER_SANITIZE_SPECIAL_CHARS);
-    $medications = filter_input(INPUT_POST, "medications", FILTER_SANITIZE_SPECIAL_CHARS);
 
-
-    $register_sql = "INSERT INTO `patients` (`name`, `birthdate`, `gender`, `nationality`, `health_insurance_no`,
+        $register_sql = "INSERT INTO `patients` (`name`, `birthdate`, `gender`, `nationality`, `health_insurance_no`,
             `email`, `mobile_phone`, `emergency_contact_name`, `emergency_contact_no`, `doctor_id`,
             `height`, `weight`, `allergies`, `chronic_diseases`, `disabilities`,
             `vaccines`, `medications`) 
@@ -54,10 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             '$height', '$weight', '$allergies', '$chronic_diseases', '$disabilities',
             '$vaccines', '$medications')";
 
-    if (mysqli_query($conn, $register_sql)) {
-        header("Location: patients.php");
-        exit();
-    };
+        if (mysqli_query($conn, $register_sql)) {
+            header("Location: patients.php");
+            exit();
+        };
+    }
 }
 mysqli_close($conn);
 ?>
@@ -318,8 +335,10 @@ mysqli_close($conn);
                                         echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['mobile_phone']) . "</td>";
                                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                                        echo "<td><a class='btn btn-sm btn-primary openPopupBtn' data-popup-target='patientInfoPopup'><i class='fa fa-address-card me-2'></i>View</a></td>";
-                                        echo "</tr>";
+                                        echo "<form method='POST' action=''>";
+                                        echo "<input type='hidden' name='patient_id' value='" . htmlspecialchars($row['id']) . "'>";
+                                        echo "<td><button type='submit' name='view_patient' class='btn btn-sm btn-primary'><i class='fa fa-address-card me-2'></i>View</button></td>";
+                                        echo "</form>";
                                     }
                                 } else {
                                     echo "<tr><td colspan='7'>No patients found.</td></tr>";
@@ -330,30 +349,33 @@ mysqli_close($conn);
                     </div>
                     <!-- Patient Info Popup -->
                     <!-- Patient Info Form -->
-                    <div id="patientInfoPopup" class="popup">
+                    <div id="patientInfoPopup" class="popup" style="<?php echo isset($patient_info_data) ? 'display: block;' : 'display: none;'; ?>">
                         <div class="popup-content">
                             <span class="close">&times;</span>
                             <h2>Patient Profile Information</h2>
-                            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-                                <p><strong>First Name: </strong><input type="text" name="firstName" value="Lukas"></p>
-                                <p><strong>Last Name: </strong><input type="text" name="lastName" value="Walker"></p>
+                            <!-- Display patient information if available -->
+                            <?php if ($patient_info_data) : ?>
+                                <p><strong>First Name: </strong><input type="text" name="firstName" value="<?php echo htmlspecialchars($patient_info_data['name']); ?>" disabled></p>
+                                <p><strong>Last Name: </strong><input type="text" name="lastName" value="" disabled></p>
                                 <p><strong>Date of Birth: </strong><span>02.01.2001</span></p>
                                 <p><strong>Gender: </strong><span>Male</span></p>
-                                <p><strong>Nationality: </strong><input type="text" name="nationality" value="Sweden"></p>
-                                <p><strong>Health Insurance No.: </strong><input type="text" name="insuranceNo" value="J700072634"></p>
-                                <p><strong>Email Address: </strong><input type="email" name="email" value="lukas.walker@gmail.com"></p>
-                                <p><strong>Phone No.: </strong><input type="tel" name="phoneNo" value="06428490257923"></p>
-                                <p><strong>Emergency Contact Name: </strong><input type="text" name="emergencyContact" value="Divi Müller"></p>
-                                <p><strong>Height: </strong><input type="number" name="height" value="160"> cm</p>
-                                <p><strong>Weight: </strong><input type="number" name="weight" value="90"> kg</p>
-                                <p><strong>Allergies: </strong><input type="text" name="allergies" value="Penicillin"></p>
-                                <p><strong>Chronic Diseases: </strong><input type="text" name="chronicDiseases" value="Diabetes Type II"></p>
-                                <p><strong>Disabilities: </strong><input type="text" name="disabilities" value="None"></p>
-                                <p><strong>Vaccines: </strong><input type="text" name="vaccines" value="Pfizer"></p>
-                                <p><strong>Medications: </strong><input type="text" name="medications" value="Paracetamol"></p>
+                                <p><strong>Nationality: </strong><input type="text" name="nationality" value="Sweden" disabled></p>
+                                <p><strong>Health Insurance No.: </strong><input type="text" name="insuranceNo" value="J700072634" disabled></p>
+                                <p><strong>Email Address: </strong><input type="email" name="email" value="lukas.walker@gmail.com" disabled></p>
+                                <p><strong>Phone No.: </strong><input type="tel" name="phoneNo" value="06428490257923" disabled></p>
+                                <p><strong>Emergency Contact Name: </strong><input type="text" name="emergencyContact" value="Divi Müller" disabled></p>
+                                <p><strong>Height: </strong><input type="number" name="height" value="160" disabled> cm</p>
+                                <p><strong>Weight: </strong><input type="number" name="weight" value="90" disabled> kg</p>
+                                <p><strong>Allergies: </strong><input type="text" name="allergies" value="Penicillin" disabled></p>
+                                <p><strong>Chronic Diseases: </strong><input type="text" name="chronicDiseases" value="Diabetes Type II" disabled></p>
+                                <p><strong>Disabilities: </strong><input type="text" name="disabilities" value="None" disabled></p>
+                                <p><strong>Vaccines: </strong><input type="text" name="vaccines" value="Pfizer" disabled></p>
+                                <p><strong>Medications: </strong><input type="text" name="medications" value="Paracetamol" disabled></p>
                                 <button type="button" class="btn btn-sm btn-primary" id="editPatientInfoBtn"><i class="fa fa-save me-2"></i>Edit Info</button>
                                 <button type="button" class="btn btn-sm btn-primary" id="deletePatientProfileBtn"><i class="fa fa-trash me-2"></i>Delete Patient Profile</button>
-                            </form>
+                            <?php else : ?>
+                                <p>No patient information available.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -738,7 +760,7 @@ mysqli_close($conn);
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-primary" name="register_patient">Register</button>
                     </form>
                 </div>
             </div>
