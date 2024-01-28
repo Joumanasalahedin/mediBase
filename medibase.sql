@@ -86,7 +86,7 @@ CREATE TABLE `patients` (
 -- Dumping data for table `patients`
 --
 
-INSERT INTO `patients` (`id`, `name`, `birthdate`, `gender`, `nationality`, `health_insurance_no`, `email`, `mobile_phone`, `emergency_contact_name`, `emergency_contact_no`, `doctor_id`, `height`, `weight`, `allergies`, `chronic_diseases`, `disabilities`, `vaccines`, `medications`) VALUES
+INSERT INTO `patients` (`id`, `first_name`, `last_name`, `birthdate`, `gender`, `nationality`, `health_insurance_no`, `email`, `mobile_phone`, `emergency_contact_name`, `emergency_contact_no`, `doctor_id`, `height`, `weight`, `allergies`, `chronic_diseases`, `disabilities`, `vaccines`, `medications`) VALUES
 (1, 'Jane Doe', '1985-02-14', 'female', 'Germany', 'HIN1234567890', 'janedoe@example.com', '+491234567891', 'John Doe', '+491234567892', 2, 170, 65, 'Penicillin', 'Hypertension', 'None', 'Influenza, Tetanus', NULL),
 (3, 'Michael Jonas', '2000-06-05', 'male', 'Germany', 'HC7468594', 'michaeljonas@gmail.com', '+491563450908', 'Katrina Jonas', '+491763408162', 2, 180, 83, 'Bees', NULL, NULL, 'COVID-19, Tetanus', NULL),
 (4, 'Sophie Becker', '1992-09-18', 'female', 'Germany', 'TK987654321', 'sophie.becker@outlook.com', '+491234567892', 'Max Becker', '+491234567893', 7, 165, 60, 'Dust', '', '', 'Influenza, Pneumococcal', ''),
