@@ -6,11 +6,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
     $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+    $department = filter_input(INPUT_POST, "speciality", FILTER_SANITIZE_SPECIAL_CHARS);
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO doctors (name, email, username, password)
-        VALUES ('$name', '$email', '$username', '$hash');";
+    $sql = "INSERT INTO doctors (name, email, department, username, password)
+        VALUES ('$name', '$email', '$department', '$username', '$hash');";
 
     if (mysqli_query($conn, $sql)) {
         header("Location: signin.php");
@@ -88,13 +89,25 @@ mysqli_close($conn);
                                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
                                 <label for="floatingInput">Email address</label>
                             </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="speciality" name="speciality">
+                                    <option value="" disabled selected>Speciality</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Obstetrics and Gynecology (OB/GYN)">Obstetrics & Gynecology</option>
+                                    <option value="Psychiatry">Psychiatry</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Emergency">Emergency</option>
+                                </select>
+                            </div>
                             <div class="form-floating mb-4">
                                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                                     <label class="form-check-label" for="exampleCheck1">I accept the <a href="#">terms and conditions</a></label>
                                 </div>
                             </div>
