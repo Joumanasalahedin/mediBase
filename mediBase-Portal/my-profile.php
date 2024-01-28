@@ -17,7 +17,6 @@ if ($name_result && $name_result->num_rows > 0) {
     $doctor_name = $row["name"];
     $doctor_department = $row["department"];
 }
-
 mysqli_close($conn);
 ?>
 
@@ -26,10 +25,10 @@ mysqli_close($conn);
 
 <head>
     <meta charset="utf-8">
-    <title>mediBase Portal - Medscape Reference</title>
+    <title>mediBase Portal - My Profile</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta content="mediBase, EHR, Healthcare" name="keywords">
+    <meta content="mediBase is a project on Information Systems in Healthcare by Jouhanzasom" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -82,24 +81,9 @@ mysqli_close($conn);
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
-                        <a href="patients.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-hospital-user me-2"></i>Patients</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="patients.php" class="dropdown-item">My Patients</a>
-                            <a href="patients.php#registerNewPatient" class="dropdown-item">Register New Patient</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="appointments.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar-days me-2"></i>Appointments</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="appointments.php" class="dropdown-item">My Appointments</a>
-                            <a href="patients.php#bookNewAppointment" class="dropdown-item">Book New Appointment</a>
-                        </div>
-                    </div>
-                    <a href="messages.php" class="nav-item nav-link"><i class="fa fa-message me-2"></i>Messages</a>
-                    <a href="todo.php" class="nav-item nav-link"><i class="fa fa-list-check me-2"></i>To Do</a>
-                    <a href="medscape.php" class="nav-item nav-link active"><i class="fa fa-book-medical me-2"></i>Medscape</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-house me-2"></i>Home</a>
+                    <a href="patients.php" class="nav-item nav-link"><i class="fa fa-hospital-user me-2"></i>My Patients</a>
+                    <a href="patient-registration.php" class="nav-item nav-link"><i class="fa fa-user-plus me-2"></i>Register Patient</a>
                     <a href="signin.php" class="nav-item nav-link"><i class="fa fa-right-from-bracket me-2"></i>Log out</a>
                 </div>
             </nav>
@@ -123,88 +107,62 @@ mysqli_close($conn);
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Messages</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Dr Lukas sent you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Dr Lukas sent you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Dr Lukas sent you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="messages.php" class="dropdown-item text-center">See all messages</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notifications</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Profile updated</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">New user added</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Password changed</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all notifications</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex"><?php echo $doctor_name; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="signin.php" class="dropdown-item">Log Out</a>
+                            <a href="my_profile.php" class="dropdown-item openPopupBtn" data-popup-target="doctorInfoPopup"><i class="fa fa-user-doctor me-3"></i>My Profile</a>
+                            <a href="#" class="dropdown-item openPopupBtn" data-popup-target="settingsPopup"><i class="fa fa-gear me-3"></i>Settings</a>
+                            <a href="signin.php" class="dropdown-item"><i class="fa fa-right-from-bracket me-3"></i>Log Out</a>
+                        </div>
+                        <!-- Settings Message Popup -->
+                        <div id="settingsPopup" class="popup">
+                            <div class="popup-content">
+                                <span class="close">&times;</span>
+                                <p>For settings changes, please contact the Admin.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
 
-            <!-- Medscape iframe Start -->
+            <!-- Doctor Profile Start -->
             <div class="container-fluid pt-4 px-4">
-                <iframe src="https://reference.medscape.com/" width="100%" height="700" style="background-color: #fff;" frameborder="0" allowfullscreen sandbox="allow-scripts allow-same-origin" title="Embedded Webpage">
-                </iframe>
+                <div class="bg-secondary rounded-top p-4">
+                    <span class="close">&times;</span>
+                    <h2 class="mb-4">Your Profile Details</h2>
+                    <p><strong>First Name: </strong><span class="doctor-editable-field">Alice</span></p>
+                    <p><strong>Last Name: </strong><span class="doctor-editable-field">Chaltikyan</span></p>
+                    <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
+                    <p><strong>Gender: </strong><span>Female</span></p>
+                    <p><strong>Nationality: </strong><span class="doctor-editable-field">Germany</span></p>
+                    <p><strong>Email Address: </strong><span class="doctor-editable-field">lukas.walker@gmail.com</span></p>
+                    <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
+                    <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
+                    <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
+                    <p>
+                        <label for="department"><strong>Department: </strong></label>
+                        <select name="Department" id="department" class="doctor-editable-field">
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Dermatology">Dermatology</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="position"><strong>Position (role): </strong></label>
+                        <select name="Position" id="position" class="doctor-editable-field">
+                            <option value="Cardiology">Medical Doctor (MD)</option>
+                            <option value="Orthopedics">Consultant</option>
+                        </select>
+                    </p>
+                    <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
+                    <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
+                    <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
+                    <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                </div>
             </div>
-            <!-- Medscape iframe End -->
+            <!-- Doctor Start -->
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">

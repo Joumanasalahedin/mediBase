@@ -92,6 +92,40 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// EDIT INFO
+document.addEventListener('DOMContentLoaded', function () {
+    function setupEditToggle(editButtonId, popupSelector) {
+        var editButton = document.getElementById(editButtonId);
+        var popup = document.querySelector(popupSelector);
+        var inputs = popup.querySelectorAll('input, select');
+
+        var isEditable = false;
+
+        function makeFieldsEditable(editable) {
+            inputs.forEach(function (input) {
+                input.disabled = !editable;
+            });
+            isEditable = editable;
+        }
+
+
+        // Initially, make fields not editable
+        makeFieldsEditable(false);
+
+        editButton.addEventListener('click', function () {
+            makeFieldsEditable(!isEditable);
+            document.getElementById('editPatientInfoBtn').style.display = 'none';
+            document.getElementById('updatePatientProfile').style.display = 'inline-block';
+        });
+    }
+
+    // Setup for Patient Info Edit Button
+    setupEditToggle('editPatientInfoBtn', '#patientInfoPopup');
+    setupEditToggle('editDoctorInfoBtn', '#doctorInfoPopup form');
+
+    // Additional setups for other forms can be added in a similar way
+});
+
 
 // // EDIT INFO
 // document.addEventListener('DOMContentLoaded', function () {
@@ -215,67 +249,3 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
  */
-
-// EDIT INFO
-document.addEventListener('DOMContentLoaded', function () {
-    function setupEditToggle(editButtonId, formSelector) {
-        var editButton = document.getElementById(editButtonId);
-        var form = document.querySelector(formSelector);
-        var inputs = form.querySelectorAll('input, select');
-
-        var isEditable = false;
-
-        function makeFieldsEditable(editable) {
-            inputs.forEach(function (input) {
-                if (!input.classList.contains('non-editable')) {
-                    input.disabled = !editable;
-                }
-            });
-            editButton.textContent = editable ? 'Update Info' : 'Edit Info';
-            isEditable = editable;
-        }
-
-
-        // Initially, make fields not editable
-        makeFieldsEditable(false);
-
-        // Adding input/change event listener to each field
-        inputs.forEach(function (input) {
-            input.addEventListener(input.tagName === 'SELECT' ? 'change' : 'input', function () {
-                if (!isEditable) {
-                    makeFieldsEditable(true);
-                }
-            });
-        });
-
-        editButton.addEventListener('click', function () {
-            if (isEditable) {
-                // Submit form or handle data update
-                console.log('Submit data for', editButtonId);
-                form.submit(); // Submit the form
-            } else {
-                // Make fields editable
-                makeFieldsEditable(true);
-            }
-        });
-    }
-
-    // Setup for Patient Info Edit Button
-    setupEditToggle('editPatientInfoBtn', '#patientInfoPopup form');
-    setupEditToggle('editDoctorInfoBtn', '#doctorInfoPopup form');
-
-    // Additional setups for other forms can be added in a similar way
-});
-
-editButton.addEventListener('click', function (event) {
-    event.preventDefault(); // Prevents default form submission behavior
-
-    if (isEditable) {
-        // Submit form or handle data update
-        console.log('Submit data for', editButtonId);
-        form.submit(); // Only submit the form here
-    } else {
-        // Make fields editable
-        makeFieldsEditable(true);
-    }
-});
