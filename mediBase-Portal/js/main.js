@@ -93,6 +93,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// Doctor Greeting
+document.addEventListener('DOMContentLoaded', function() {
+    var greetingText = document.getElementById('doctorGreeting');
+    var now = new Date();
+    var hour = now.getHours();
+
+    if (hour < 12) {
+        greetingText.innerText = 'Good morning';
+    } else if (hour < 18) {
+        greetingText.innerText = 'Good afternoon';
+    } else {
+        greetingText.innerText = 'Good evening';
+    }
+});
+
+
 // EDIT INFO
 document.addEventListener('DOMContentLoaded', function () {
     function setupEditToggle(editButtonId, popupSelector) {
