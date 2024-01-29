@@ -513,6 +513,22 @@ mysqli_close($conn);
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Blood Group</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" id="blood_group" name="blood_group" required>
+                                    <option value="" selected disabled>Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B-">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O-">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Allergies</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="inputEmail3" name="allergies">

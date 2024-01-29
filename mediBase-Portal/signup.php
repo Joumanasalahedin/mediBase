@@ -7,11 +7,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
     $department = filter_input(INPUT_POST, "speciality", FILTER_SANITIZE_SPECIAL_CHARS);
+    $birth_date = $_POST['birth_date'];
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO doctors (name, email, department, username, password)
-        VALUES ('$name', '$email', '$department', '$username', '$hash');";
+    $sql = "INSERT INTO doctors (name, birth_date, email, department, username, password)
+        VALUES ('$name', '$birth_date', '$email', '$department', '$username', '$hash');";
 
     if (mysqli_query($conn, $sql)) {
         header("Location: signin.php");
@@ -100,6 +101,10 @@ mysqli_close($conn);
                                     <option value="Neurology">Neurology</option>
                                     <option value="Emergency">Emergency</option>
                                 </select>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingText" name="birth_date" required>
+                                <label for="floatingText">Birthdate</label>
                             </div>
                             <div class="form-floating mb-4">
                                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>

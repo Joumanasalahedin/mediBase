@@ -17,6 +17,44 @@ if ($name_result && $name_result->num_rows > 0) {
     $doctor_name = $row["name"];
     $doctor_department = $row["department"];
 }
+
+$doc_sql = "SELECT * FROM `doctors` WHERE id = $doctor_id";
+$doc_result = mysqli_query($conn, $doc_sql);
+
+if ($doctor_info = mysqli_fetch_assoc($doc_result)) {
+    $doctor_info = $doctor_info;
+}
+
+// Edit Doctor Info
+if (isset($_POST['update_doctor_profile'])) {
+    $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+    $gender = filter_input(INPUT_POST, "gender", FILTER_SANITIZE_SPECIAL_CHARS);
+    $nationality = filter_input(INPUT_POST, "nationality", FILTER_SANITIZE_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+    $mobile_phone = filter_input(INPUT_POST, "mobile_phone", FILTER_SANITIZE_NUMBER_INT);
+    $address = filter_input(INPUT_POST, "address", FILTER_SANITIZE_SPECIAL_CHARS);
+    $license_no = filter_input(INPUT_POST, "license_no", FILTER_SANITIZE_SPECIAL_CHARS);
+    $department = filter_input(INPUT_POST, "department", FILTER_SANITIZE_SPECIAL_CHARS);
+    $position = filter_input(INPUT_POST, "position", FILTER_SANITIZE_SPECIAL_CHARS);
+    $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+
+    $update_sql = "UPDATE `doctors` SET `name` = '$name',
+                  `gender` = '$gender',
+                  `nationality` = '$nationality',
+                  `email` = '$email',
+                  `mobile_phone` = '$mobile_phone',
+                  `address` = '$address',
+                  `license_no` = '$license_no',
+                  `department` = '$department',
+                  `position` = '$position',
+                  `username` = '$username' WHERE `doctors`.`id` = $doctor_id";
+
+    if (mysqli_query($conn, $update_sql)) {
+        header("Location: my-profile.php");
+        exit();
+    };
+};
+
 mysqli_close($conn);
 ?>
 
@@ -127,77 +165,30 @@ mysqli_close($conn);
             </nav>
             <!-- Navbar End -->
 
-            <!-- TO BE DELETED -->
+            <!-- Doctor Information -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded-top p-4">
-                    <span class="close">&times;</span>
                     <h2 class="mb-4">Your Profile Details</h2>
-                    <p><strong>First Name: </strong><span class="doctor-editable-field">Alice</span></p>
-                    <p><strong>Last Name: </strong><span class="doctor-editable-field">Chaltikyan</span></p>
-                    <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
-                    <p><strong>Gender: </strong><span>Female</span></p>
-                    <p><strong>Nationality: </strong><span class="doctor-editable-field">Germany</span></p>
-                    <p><strong>Email Address: </strong><span class="doctor-editable-field">lukas.walker@gmail.com</span></p>
-                    <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
-                    <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
-                    <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
-                    <p>
-                        <label for="department"><strong>Department: </strong></label>
-                        <select name="Department" id="department" class="doctor-editable-field">
-                            <option value="Cardiology">Cardiology</option>
-                            <option value="Orthopedics">Orthopedics</option>
-                            <option value="Dermatology">Dermatology</option>
-                        </select>
-                    </p>
-                    <p>
-                        <label for="position"><strong>Position (role): </strong></label>
-                        <select name="Position" id="position" class="doctor-editable-field">
-                            <option value="Cardiology">Medical Doctor (MD)</option>
-                            <option value="Orthopedics">Consultant</option>
-                        </select>
-                    </p>
-                    <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
-                    <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
-                    <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
-                    <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                        <p><strong>Name: </strong><input type="text" name="name" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['name']); ?>"></p>
+                        <p><strong>Birthdate: </strong><span name="birth_date"><?php
+                                                                                $dateObject = new DateTime($doctor_info['birth_date']);
+                                                                                $formattedDate = $dateObject->format('d-m-Y');
+                                                                                echo htmlspecialchars($formattedDate); ?></span></p></span></p>
+                        <p><strong>Gender: </strong><input type="text" name="gender" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['gender']); ?>"></p>
+                        <p><strong>Nationality: </strong><input type="text" name="nationality" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['nationality']); ?>"></p>
+                        <p><strong>Email Address: </strong><input type="email" name="email" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['email']); ?>" style=" width: 22%;"></p>
+                        <p><strong>Phone No.:: </strong><input type="tel" name="mobile_phone" class="doctor-editable-field" value=" <?php echo htmlspecialchars($doctor_info['mobile_phone']); ?>"></p>
+                        <p><strong>Address: </strong><input type="text" name="address" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['address']); ?>"></span></p>
+                        <p><strong>License No.: </strong><input type="text" name="license_no" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['license_no']); ?>"></p>
+                        <p><strong>Department: </strong><input type="text" name="department" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['department']); ?>"></p>
+                        <p><strong>Position: </strong><input type="text" name="position" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['position']); ?>"></p>
+                        <p><strong>Username: </strong><input type="text" name="username" class="doctor-editable-field" value="<?php echo htmlspecialchars($doctor_info['username']); ?>"></p>
+                        <button type="submit" class="btn btn-sm btn-primary" id="updateDoctorProfile" name="update_doctor_profile"><i class="fa fa-save me-2"></i>Save Changes</button>
+                    </form>
                 </div>
             </div>
-            <!-- TO BE DELETED -->
-
-            <!-- Patient Info Form -->
-            <div id="patientInfoPopup" class="popup" style="<?php echo isset($patient_info_data) ? 'display: block;' : 'display: none;'; ?>">
-                        <div class="popup-content">
-                            <span class="close">&times;</span>
-                            <h2>Your Profile Information</h2>
-                            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-                                <!-- Display patient information if available -->
-                                <?php if ($patient_info_data) : ?>
-                                    <p><strong>Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
-                                    <p><strong>Date of Birth: </strong><span><?php
-                                                                                $dateObject = new DateTime($patient_info_data['birthdate']);
-                                                                                $formattedDate = $dateObject->format('d-m-Y');
-                                                                                echo htmlspecialchars($formattedDate); ?></span></p>
-                                    <p><strong>Gender: </strong><span><?php echo htmlspecialchars($patient_info_data['gender']); ?></span></p>
-                                    <p><strong>Nationality: </strong><input type="text" name="nationality" value="<?php echo htmlspecialchars($patient_info_data['nationality']); ?>"></p>
-                                    <p><strong>Email Address: </strong><input type="email" name="email" value="<?php echo htmlspecialchars($patient_info_data['email']); ?>" style="width: 25%;" disabled></p>
-                                    <p><strong>Phone No.: </strong><input type="tel" name="mobile_phone" value="<?php echo htmlspecialchars($patient_info_data['mobile_phone']); ?>" disabled></p>
-                                    <p><strong>Address: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-                                    <p><strong>License No.: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-                                    <p><strong>Department: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-                                    <p><strong>Position (role): </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-                                    <p><strong>Username: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-                                    <p><strong>Password: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-                                    <p><strong>Emergency Contact Name: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
-
-                                    <input type="hidden" name="patient_id" value="<?php echo htmlspecialchars($patient_info_data['id']); ?>">
-                                    <button type="button" class="btn btn-sm btn-primary" id="editPatientInfoBtn" name="editPatientInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
-                                    <button type="submit" class="btn btn-sm btn-primary" id="updatePatientProfile" name="update_patient_profile" style="display: none; margin: 25px 0px 0px"><i class="fa fa-save me-2"></i>Save Changes</button>
-                                <?php else : ?>
-                                    <p>No patient information available.</p>
-                                <?php endif; ?>
-                            </form>
-                        </div>
-                    </div>
+            <!-- Doctor Information End -->
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
