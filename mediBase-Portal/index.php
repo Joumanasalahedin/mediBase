@@ -53,7 +53,7 @@ mysqli_close($conn);
     <link href="css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="checkForWelcomeBack()">
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -270,8 +270,9 @@ mysqli_close($conn);
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
+    <!-- Main Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/cookies.js"></script>
 </body>
 
 </html>
