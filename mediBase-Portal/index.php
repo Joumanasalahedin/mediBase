@@ -134,7 +134,7 @@ mysqli_close($conn);
             <!-- Greeting Doctor Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded-top p-4">
-                    <h2>Good Day, Dr. Doe!</h2>
+                    <h2><span id="doctorGreeting"></span>, Dr. <?php echo $doctor_name; ?>!</h2>
                 </div>
             </div>
             <!-- Greeting Doctor End -->
