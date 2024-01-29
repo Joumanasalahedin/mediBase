@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to MediBase, a comprehensive management system designed for doctors to streamline patient registration and management. MediBase is tailored to provide an efficient, user-friendly platform for healthcare professionals to maintain patient records, schedule appointments, and manage patient health data securely. This system is ideal for individual practitioners, clinics, and hospitals looking to digitize and optimize their patient management processes.
+Welcome to MediBase, a comprehensive management system designed for doctors to streamline patient registration and management. MediBase is tailored to provide an efficient, user-friendly platform for healthcare professionals to maintain patient records, and manage patient health data securely. This system is ideal for individual practitioners, clinics, and hospitals looking to digitize and optimize their patient management processes.
 
 ## Features
 - **Patient Registration**: Easily register new patients and maintain their profiles.
