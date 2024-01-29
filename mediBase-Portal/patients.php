@@ -62,6 +62,7 @@ if (isset($_POST['update_patient_profile'])) {
     $emergency_no = filter_input(INPUT_POST, "emergency_contact_no", FILTER_SANITIZE_NUMBER_INT);
     $height = filter_input(INPUT_POST, "height", FILTER_SANITIZE_NUMBER_INT);
     $weight = filter_input(INPUT_POST, "weight", FILTER_SANITIZE_NUMBER_INT);
+    $blood_group = filter_input(INPUT_POST, "blood_group", FILTER_SANITIZE_SPECIAL_CHARS);
     $allergies = filter_input(INPUT_POST, "allergies", FILTER_SANITIZE_SPECIAL_CHARS);
     $chronic_diseases = filter_input(INPUT_POST, "chronic_diseases", FILTER_SANITIZE_SPECIAL_CHARS);
     $disabilities = filter_input(INPUT_POST, "disabilities", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -79,6 +80,7 @@ if (isset($_POST['update_patient_profile'])) {
                   `emergency_contact_no` = '$emergency_no',
                   `height` = '$height',
                   `weight` = '$weight',
+                  `blood_group` = '$blood_group',
                   `allergies` = '$allergies',
                   `chronic_diseases` = '$chronic_diseases',
                   `disabilities` = '$disabilities',
@@ -90,6 +92,30 @@ if (isset($_POST['update_patient_profile'])) {
         exit();
     };
 };
+
+// Delete Patient
+if (isset($_POST['delete_patient'])) {
+    $patient_id = $_POST['patient_id'];
+
+    // Fetch patient information from the database
+    $patient_info_query = "SELECT * FROM patients WHERE id = $patient_id";
+    $patient_info_result = mysqli_query($conn, $patient_info_query);
+
+    if ($patient_info = mysqli_fetch_assoc($patient_info_result)) {
+        // Store patient information in a variable to display in the popup
+        $patient_info_data = $patient_info;
+        $patient_id = $patient_info_data['id'];
+
+        $delete_sql = "DELETE FROM `patients` WHERE `patients`.`id` = $patient_id";
+
+        if (mysqli_query($conn, $delete_sql)) {
+            header("Location: patients.php");
+            exit();
+        } else {
+            $patient_info_data = null;
+        }
+    }
+}
 mysqli_close($conn);
 ?>
 
@@ -182,7 +208,7 @@ mysqli_close($conn);
                             <span class="d-none d-lg-inline-flex"><?php echo $doctor_name; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="my_profile.php" class="dropdown-item openPopupBtn" data-popup-target="doctorInfoPopup"><i class="fa fa-user-doctor me-3"></i>My Profile</a>
+                            <a href="my-profile.php" class="dropdown-item openPopupBtn" data-popup-target="doctorInfoPopup"><i class="fa fa-user-doctor me-3"></i>My Profile</a>
                             <a href="#" class="dropdown-item openPopupBtn" data-popup-target="settingsPopup"><i class="fa fa-gear me-3"></i>Settings</a>
                             <a href="signin.php" class="dropdown-item"><i class="fa fa-right-from-bracket me-3"></i>Log Out</a>
                         </div>
@@ -217,13 +243,13 @@ mysqli_close($conn);
                 <div class="bg-secondary rounded h-100 p-4">
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <h6 class="mb-4">Patients Registered With You</h6>
-                        <a class="mb-4" href="#registerNewPatient">Register New</a>
+                        <a class="mb-4" href="patient-registration.php">Register New</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">ID</th>
                                     <th scope="col">First Name</th>
                                     <th scope="col">Last Name</th>
                                     <th scope="col">Birthdate</th>
@@ -231,6 +257,7 @@ mysqli_close($conn);
                                     <th scope="col">Contact Number</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Action</th>
+                                    <th scope="col">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -251,6 +278,10 @@ mysqli_close($conn);
                                         echo "<form method='POST' action=''>";
                                         echo "<input type='hidden' name='patient_id' value='" . htmlspecialchars($row['id']) . "'>";
                                         echo "<td><button type='submit' name='view_patient' class='btn btn-sm btn-primary'><i class='fa fa-address-card me-2'></i>View</button></td>";
+                                        echo "</form>";
+                                        echo "<form method='POST' action=''>";
+                                        echo "<input type='hidden' name='patient_id' value='" . htmlspecialchars($row['id']) . "'>";
+                                        echo "<td><button type='submit' name='delete_patient' class='btn btn-sm btn-primary'><i class='fa fa-address-card me-2'></i>Delete</button></td>";
                                         echo "</form>";
                                     }
                                 } else {
@@ -278,21 +309,21 @@ mysqli_close($conn);
                                     <p><strong>Gender: </strong><span><?php echo htmlspecialchars($patient_info_data['gender']); ?></span></p>
                                     <p><strong>Nationality: </strong><input type="text" name="nationality" value="<?php echo htmlspecialchars($patient_info_data['nationality']); ?>"></p>
                                     <p><strong>Health Insurance No.: </strong><input type="text" name="health_insurance" value="<?php echo htmlspecialchars($patient_info_data['health_insurance_no']); ?>" disabled></p>
-                                    <p><strong>Email Address: </strong><input type="email" name="email" value="<?php echo htmlspecialchars($patient_info_data['email']); ?>" disabled></p>
+                                    <p><strong>Email Address: </strong><input type="email" name="email" value="<?php echo htmlspecialchars($patient_info_data['email']); ?>" style="width: 25%;" disabled></p>
                                     <p><strong>Phone No.: </strong><input type="tel" name="mobile_phone" value="<?php echo htmlspecialchars($patient_info_data['mobile_phone']); ?>" disabled></p>
                                     <p><strong>Emergency Contact Name: </strong><input type="text" name="emergency_contact_name" value="<?php echo htmlspecialchars($patient_info_data['emergency_contact_name']); ?>" disabled></p>
                                     <p><strong>Emergency Contact No.: </strong><input type="tel" name="emergency_contact_no" value="<?php echo htmlspecialchars($patient_info_data['emergency_contact_no']); ?>" disabled></p>
                                     <p><strong>Height: </strong><input type="number" name="height" value="<?php echo htmlspecialchars($patient_info_data['height']); ?>" disabled> cm</p>
                                     <p><strong>Weight: </strong><input type="number" name="weight" value="<?php echo htmlspecialchars($patient_info_data['weight']); ?>" disabled> kg</p>
-                                    <p><strong>Allergies: </strong><input type="text" name="allergies" value="<?php echo htmlspecialchars($patient_info_data['allergies']); ?>" disabled></p>
-                                    <p><strong>Chronic Diseases: </strong><input type="text" name="chronic_diseases" value="<?php echo htmlspecialchars($patient_info_data['chronic_diseases']); ?>" disabled></p>
-                                    <p><strong>Disabilities: </strong><input type="text" name="disabilities" value="<?php echo htmlspecialchars($patient_info_data['disabilities']); ?>" disabled></p>
-                                    <p><strong>Vaccines: </strong><input type="text" name="vaccines" value="<?php echo htmlspecialchars($patient_info_data['vaccines']); ?>" disabled></p>
-                                    <p><strong>Medications: </strong><input type="text" name="medications" value="<?php echo htmlspecialchars($patient_info_data['medications']); ?>" disabled></p>
+                                    <p><strong>Blood Group: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>Allergies: </strong><textarea name="allergies" disabled><?php echo htmlspecialchars($patient_info_data['allergies']); ?></textarea></p>
+                                    <p><strong>Chronic Diseases: </strong><textarea name="chronic_diseases" disabled><?php echo htmlspecialchars($patient_info_data['chronic_diseases']); ?></textarea></p>
+                                    <p><strong>Disabilities: </strong><textarea name="disabilities" disabled><?php echo htmlspecialchars($patient_info_data['disabilities']); ?></textarea></p>
+                                    <p><strong>Vaccines: </strong><textarea name="vaccines" disabled><?php echo htmlspecialchars($patient_info_data['vaccines']); ?></textarea></p>
+                                    <p><strong>Medications: </strong><textarea name="medications" disabled><?php echo htmlspecialchars($patient_info_data['medications']); ?></textarea></p>
                                     <input type="hidden" name="patient_id" value="<?php echo htmlspecialchars($patient_info_data['id']); ?>">
                                     <button type="button" class="btn btn-sm btn-primary" id="editPatientInfoBtn" name="editPatientInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
                                     <button type="submit" class="btn btn-sm btn-primary" id="updatePatientProfile" name="update_patient_profile" style="display: none; margin: 25px 0px 0px"><i class="fa fa-save me-2"></i>Save Changes</button>
-                                    <button type="button" class="btn btn-sm btn-primary" id="deletePatientProfileBtn"><i class="fa fa-trash me-2"></i>Delete Patient Profile</button>
                                 <?php else : ?>
                                     <p>No patient information available.</p>
                                 <?php endif; ?>
@@ -313,7 +344,7 @@ mysqli_close($conn);
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed by <a href="https://github.com/so-mb/mediBase">Jouhanzasom&reg;</a>
+                            Designed by <a href="https://github.com/Joumanasalahedin/mediBase">Jouhanzasom&reg;</a>
                         </div>
                     </div>
                 </div>

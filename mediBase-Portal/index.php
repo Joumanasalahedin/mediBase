@@ -114,7 +114,7 @@ mysqli_close($conn);
                             <span class="d-none d-lg-inline-flex"><?php echo $doctor_name; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="my_profile.php" class="dropdown-item openPopupBtn" data-popup-target="doctorInfoPopup"><i class="fa fa-user-doctor me-3"></i>My Profile</a>
+                            <a href="my-profile.php" class="dropdown-item openPopupBtn" data-popup-target="doctorInfoPopup"><i class="fa fa-user-doctor me-3"></i>My Profile</a>
                             <a href="#" class="dropdown-item openPopupBtn" data-popup-target="settingsPopup"><i class="fa fa-gear me-3"></i>Settings</a>
                             <a href="signin.php" class="dropdown-item"><i class="fa fa-right-from-bracket me-3"></i>Log
                                 Out</a>
