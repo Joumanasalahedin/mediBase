@@ -129,7 +129,6 @@ mysqli_close($conn);
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mb-4">
-                                <a href="">Forgot Password</a>
                             </div>
                             <button type="submit" id="signupButton" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
                             <p class="text-center mb-0">Already have an Account? <a href="signin.php">Sign In</a></p>
