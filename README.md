@@ -20,6 +20,7 @@ To get started with MediBase, clone the repository to your local machine. Open y
 
 ```bash
 git clone https://github.com/Joumanasalahaldin/mediBase.git
+```
 
 ### Setting Up the Application
 After cloning the repository, you need to move the MediBase project into the `htdocs` directory of your XAMPP installation. This can be done by simply copying and pasting the cloned folder.
