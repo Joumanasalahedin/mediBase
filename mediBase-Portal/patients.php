@@ -8,6 +8,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     $doctor_id = $_SESSION["id"];
     $username = $_SESSION["username"];
 }
+
 // Change name on profile to doctor's name
 $name_sql = "SELECT name, department FROM doctors WHERE id = $doctor_id";
 $name_result = $conn->query($name_sql);
@@ -210,7 +211,7 @@ mysqli_close($conn);
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="my-profile.php" class="dropdown-item openPopupBtn" data-popup-target="doctorInfoPopup"><i class="fa fa-user-doctor me-3"></i>My Profile</a>
                             <a href="#" class="dropdown-item openPopupBtn" data-popup-target="settingsPopup"><i class="fa fa-gear me-3"></i>Settings</a>
-                            <a href="signin.php" class="dropdown-item"><i class="fa fa-right-from-bracket me-3"></i>Log Out</a>
+                            <a href="signin.php?" class="dropdown-item"><i class="fa fa-right-from-bracket me-3"></i>Log Out</a>
                         </div>
                         <!-- Settings Message Popup -->
                         <div id="settingsPopup" class="popup">
@@ -300,25 +301,33 @@ mysqli_close($conn);
                             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                                 <!-- Display patient information if available -->
                                 <?php if ($patient_info_data) : ?>
-                                    <div class="patient-info-divs">
-                                        <p><strong>First Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
-                                        <p><strong>Last Name: </strong><input type="text" name="last_name" value="<?php echo htmlspecialchars($patient_info_data['last_name']); ?>"></p>
+                                    <div>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>First Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Last Name: </strong><input type="text" name="last_name" value="<?php echo htmlspecialchars($patient_info_data['last_name']); ?>"></p>
                                     </div>
-                                    <p><strong>First Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
-                                    <p><strong>Last Name: </strong><input type="text" name="last_name" value="<?php echo htmlspecialchars($patient_info_data['last_name']); ?>"></p>
-                                    <p><strong>Date of Birth: </strong><span><?php
-                                                                                $dateObject = new DateTime($patient_info_data['birthdate']);
-                                                                                $formattedDate = $dateObject->format('d-m-Y');
-                                                                                echo htmlspecialchars($formattedDate); ?></span></p>
-                                    <p><strong>Gender: </strong><span><?php echo htmlspecialchars($patient_info_data['gender']); ?></span></p>
-                                    <p><strong>Nationality: </strong><input type="text" name="nationality" value="<?php echo htmlspecialchars($patient_info_data['nationality']); ?>"></p>
-                                    <p><strong>Health Insurance No.: </strong><input type="text" name="health_insurance" value="<?php echo htmlspecialchars($patient_info_data['health_insurance_no']); ?>" disabled></p>
-                                    <p><strong>Email Address: </strong><input type="email" name="email" value="<?php echo htmlspecialchars($patient_info_data['email']); ?>" style="width: 25%;" disabled></p>
-                                    <p><strong>Phone No.: </strong><input type="tel" name="mobile_phone" value="<?php echo htmlspecialchars($patient_info_data['mobile_phone']); ?>" disabled></p>
-                                    <p><strong>Emergency Contact Name: </strong><input type="text" name="emergency_contact_name" value="<?php echo htmlspecialchars($patient_info_data['emergency_contact_name']); ?>" disabled></p>
-                                    <p><strong>Emergency Contact No.: </strong><input type="tel" name="emergency_contact_no" value="<?php echo htmlspecialchars($patient_info_data['emergency_contact_no']); ?>" disabled></p>
-                                    <p><strong>Height: </strong><input type="number" name="height" value="<?php echo htmlspecialchars($patient_info_data['height']); ?>" disabled> cm</p>
-                                    <p><strong>Weight: </strong><input type="number" name="weight" value="<?php echo htmlspecialchars($patient_info_data['weight']); ?>" disabled> kg</p>
+                                    <div>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Date of Birth: </strong><span><?php
+                                                                                                                                    $dateObject = new DateTime($patient_info_data['birthdate']);
+                                                                                                                                    $formattedDate = $dateObject->format('d-m-Y');
+                                                                                                                                    echo htmlspecialchars($formattedDate); ?></span></p>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Gender: </strong><span><?php echo htmlspecialchars($patient_info_data['gender']); ?></span></p>
+                                    </div>
+                                    <div>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Nationality: </strong><input type="text" name="nationality" value="<?php echo htmlspecialchars($patient_info_data['nationality']); ?>"></p>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Health Insurance No.: </strong><input type="text" name="health_insurance" value="<?php echo htmlspecialchars($patient_info_data['health_insurance_no']); ?>" disabled></p>
+                                    </div>
+                                    <div>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Email Address: </strong><input type="email" name="email" value="<?php echo htmlspecialchars($patient_info_data['email']); ?>" style="width: 70%;" disabled></p>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Phone No.: </strong><input type="tel" name="mobile_phone" value="<?php echo htmlspecialchars($patient_info_data['mobile_phone']); ?>" disabled></p>
+                                    </div>
+                                    <div>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Emergency Contact Name: </strong><input type="text" name="emergency_contact_name" value="<?php echo htmlspecialchars($patient_info_data['emergency_contact_name']); ?>" disabled></p>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Emergency Contact No.: </strong><input type="tel" name="emergency_contact_no" value="<?php echo htmlspecialchars($patient_info_data['emergency_contact_no']); ?>" disabled></p>
+                                    </div>
+                                    <div>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Height: </strong><input type="number" name="height" value="<?php echo htmlspecialchars($patient_info_data['height']); ?>" disabled> cm</p>
+                                        <p style="display: inline-block; margin-right: 15px;"><strong>Weight: </strong><input type="number" name="weight" value="<?php echo htmlspecialchars($patient_info_data['weight']); ?>" disabled> kg</p>
+                                    </div>
                                     <p><strong>Blood Group: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
                                     <p><strong>Allergies: </strong><textarea name="allergies" disabled><?php echo htmlspecialchars($patient_info_data['allergies']); ?></textarea></p>
                                     <p><strong>Chronic Diseases: </strong><textarea name="chronic_diseases" disabled><?php echo htmlspecialchars($patient_info_data['chronic_diseases']); ?></textarea></p>
