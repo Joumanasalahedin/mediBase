@@ -360,50 +360,13 @@
   animation: slideUp 0.5s forwards;
 }
 
-/* Cookies Consent Styling */
-.cookie-consent-popup {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #f4f4f4;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  display: none; /* Hidden by default */
-  z-index: 1000;
-}
-
-.cookie-consent-content p {
-  margin: 0;
-  padding-right: 20px;
-}
-
-.cookie-btn {
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#acceptCookies {
-  background-color: #4caf50;
-  color: white;
-}
-
-#declineCookies {
-  background-color: #f44336;
-  color: white;
-}
-
-
 /* Password Requirements (Signup) Styling */
 .requirement {
-    color: red;
-    font-weight: normal;
+  color: red;
+  font-weight: normal;
 }
 
 .requirement.met {
-    color: green;
-    font-weight: bold;
+  color: green;
+  font-weight: bold;
 }

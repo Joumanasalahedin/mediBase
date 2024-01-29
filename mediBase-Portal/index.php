@@ -289,16 +289,6 @@ mysqli_close($conn);
         </div>
         <!-- Content End -->
 
-        <!-- Cookie Consent Popup -->
-        <div id="cookieConsentPopup" class="cookie-consent-popup">
-            <div class="cookie-consent-content">
-                <p>This website uses cookies to enhance user experience. By continuing to browse the site, you agree to our use of cookies.</p>
-                <button id="acceptCookies" class="cookie-btn">Accept</button>
-                <button id="declineCookies" class="cookie-btn">Decline</button>
-            </div>
-        </div>
-
-
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
