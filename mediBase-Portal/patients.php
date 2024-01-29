@@ -300,6 +300,10 @@ mysqli_close($conn);
                             <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                                 <!-- Display patient information if available -->
                                 <?php if ($patient_info_data) : ?>
+                                    <div class="patient-info-divs">
+                                        <p><strong>First Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
+                                        <p><strong>Last Name: </strong><input type="text" name="last_name" value="<?php echo htmlspecialchars($patient_info_data['last_name']); ?>"></p>
+                                    </div>
                                     <p><strong>First Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
                                     <p><strong>Last Name: </strong><input type="text" name="last_name" value="<?php echo htmlspecialchars($patient_info_data['last_name']); ?>"></p>
                                     <p><strong>Date of Birth: </strong><span><?php

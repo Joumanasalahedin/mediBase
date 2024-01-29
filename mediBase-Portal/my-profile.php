@@ -132,34 +132,36 @@ mysqli_close($conn);
                 <div class="bg-secondary rounded-top p-4">
                     <span class="close">&times;</span>
                     <h2 class="mb-4">Your Profile Details</h2>
-                    <p><strong>First Name: </strong><span class="doctor-editable-field">Alice</span></p>
-                    <p><strong>Last Name: </strong><span class="doctor-editable-field">Chaltikyan</span></p>
-                    <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
-                    <p><strong>Gender: </strong><span>Female</span></p>
-                    <p><strong>Nationality: </strong><span class="doctor-editable-field">Germany</span></p>
-                    <p><strong>Email Address: </strong><span class="doctor-editable-field">lukas.walker@gmail.com</span></p>
-                    <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
-                    <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
-                    <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
-                    <p>
-                        <label for="department"><strong>Department: </strong></label>
-                        <select name="Department" id="department" class="doctor-editable-field">
-                            <option value="Cardiology">Cardiology</option>
-                            <option value="Orthopedics">Orthopedics</option>
-                            <option value="Dermatology">Dermatology</option>
-                        </select>
-                    </p>
-                    <p>
-                        <label for="position"><strong>Position (role): </strong></label>
-                        <select name="Position" id="position" class="doctor-editable-field">
-                            <option value="Cardiology">Medical Doctor (MD)</option>
-                            <option value="Orthopedics">Consultant</option>
-                        </select>
-                    </p>
-                    <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
-                    <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
-                    <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
-                    <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                        <p><strong>First Name: </strong><span class="doctor-editable-field">Alice</span></p>
+                        <p><strong>Last Name: </strong><span class="doctor-editable-field">Chaltikyan</span></p>
+                        <p><strong>Date of Birth: </strong><span>02.01.1988</span></p>
+                        <p><strong>Gender: </strong><span>Female</span></p>
+                        <p><strong>Nationality: </strong><span class="doctor-editable-field">Germany</span></p>
+                        <p><strong>Email Address: </strong><span class="doctor-editable-field">lukas.walker@gmail.com</span></p>
+                        <p><strong>Phone No.:: </strong><span class="doctor-editable-field">06428490257923</span></p>
+                        <p><strong>Address: </strong><span class="doctor-editable-field">Alois-Gäßl-Straße 4</span></p>
+                        <p><strong>License No.: </strong><span class="doctor-editable-field">8239629247</span></p>
+                        <p>
+                            <label for="department"><strong>Department: </strong></label>
+                            <select name="Department" id="department" class="doctor-editable-field">
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Dermatology">Dermatology</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label for="position"><strong>Position (role): </strong></label>
+                            <select name="Position" id="position" class="doctor-editable-field">
+                                <option value="Cardiology">Medical Doctor (MD)</option>
+                                <option value="Orthopedics">Consultant</option>
+                            </select>
+                        </p>
+                        <p><strong>Username: </strong><span class="doctor-editable-field">a.chaltikan</span></p>
+                        <p><strong>Password: </strong><span class="doctor-editable-field">ljXVk6bBKtvbhqK</span></p>
+                        <p><strong>Emergency Contact Name: </strong><span class="doctor-editable-field">Divi Müller</span></p>
+                        <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                    </form>
                 </div>
             </div>
             <!-- Doctor Start -->
