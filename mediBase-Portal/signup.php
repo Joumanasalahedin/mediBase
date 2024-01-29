@@ -105,6 +105,18 @@ mysqli_close($conn);
                                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
+                            <div class="mb-4">
+                                <input type="checkbox" id="toggle-password">
+                                <label for="toggle-password">Show Password</label>
+                            </div>
+                            <div id="password-requirements" class="mb-4">
+                                <p id="min-length" class="requirement">Minimum 8 characters</p>
+                                <p id="lowercase" class="requirement">Contains lowercase letter</p>
+                                <p id="uppercase" class="requirement">Contains uppercase letter</p>
+                                <p id="number" class="requirement">Contains number</p>
+                                <p id="special-char" class="requirement">Contains special character</p>
+                                <hr>
+                            </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
@@ -114,7 +126,7 @@ mysqli_close($conn);
                             <div class="d-flex align-items-center mb-4">
                                 <a href="">Forgot Password</a>
                             </div>
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
+                            <button type="submit" id="signupButton" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
                             <p class="text-center mb-0">Already have an Account? <a href="signin.php">Sign In</a></p>
                         </form>
                     </div>
