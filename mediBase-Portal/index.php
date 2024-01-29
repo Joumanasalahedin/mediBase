@@ -63,6 +63,41 @@ mysqli_close($conn);
         </div>
         <!-- Spinner End -->
 
+        <!-- Welcome Back Slide-in (Based on Session Cookie) Start -->
+        <div class="alert alert-success" id="welcomeAlert" style="display: none; position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-Index: 2000" role="alert">
+            Welcome back, <span id="username"></span>!
+        </div>
+        <?php
+            $showWelcomeBack = isset($_GET['login']) && $_GET['login'] === 'success';
+        ?>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var showWelcomeBack = <?php echo json_encode($showWelcomeBack); ?>;
+                var user = getCookie("customSessionUser");
+
+                function checkForWelcomeBack() {
+                    var user = getCookie("customSessionUser");
+                    if (user) {
+                        var welcomeAlert = document.getElementById("welcomeAlert");
+                        var usernameSpan = document.getElementById("username");
+                        usernameSpan.textContent = user;
+                        welcomeAlert.style.display = "block";
+                        welcomeAlert.classList.add("slide-in");
+
+                        setTimeout(function () {
+                        welcomeAlert.classList.replace("slide-in", "slide-out");
+                        }, 3000);
+                    }
+                }
+
+                if (user && showWelcomeBack) {
+                    checkForWelcomeBack()
+                }
+            });
+        </script>
+        <!-- Welcome Back Popup (Based on Session Cookie) End -->
+
 
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
@@ -254,6 +289,15 @@ mysqli_close($conn);
         </div>
         <!-- Content End -->
 
+        <!-- Cookie Consent Popup -->
+        <div id="cookieConsentPopup" class="cookie-consent-popup">
+            <div class="cookie-consent-content">
+                <p>This website uses cookies to enhance user experience. By continuing to browse the site, you agree to our use of cookies.</p>
+                <button id="acceptCookies" class="cookie-btn">Accept</button>
+                <button id="declineCookies" class="cookie-btn">Decline</button>
+            </div>
+        </div>
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -270,7 +314,7 @@ mysqli_close($conn);
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
+    <!-- Main Javascript -->
     <script src="js/main.js"></script>
 </body>
 

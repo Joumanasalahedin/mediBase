@@ -382,7 +382,7 @@ mysqli_close($conn);
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
+    <!-- Main Javascript -->
     <script src="js/main.js"></script>
 </body>
 
