@@ -127,7 +127,7 @@ mysqli_close($conn);
             </nav>
             <!-- Navbar End -->
 
-            <!-- Doctor Profile Start -->
+            <!-- TO BE DELETED -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded-top p-4">
                     <span class="close">&times;</span>
@@ -162,7 +162,42 @@ mysqli_close($conn);
                     <button class="btn btn-sm btn-primary" id="editDoctorInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
                 </div>
             </div>
-            <!-- Doctor Start -->
+            <!-- TO BE DELETED -->
+
+            <!-- Patient Info Form -->
+            <div id="patientInfoPopup" class="popup" style="<?php echo isset($patient_info_data) ? 'display: block;' : 'display: none;'; ?>">
+                        <div class="popup-content">
+                            <span class="close">&times;</span>
+                            <h2>Your Profile Information</h2>
+                            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                                <!-- Display patient information if available -->
+                                <?php if ($patient_info_data) : ?>
+                                    <p><strong>Name: </strong><input type="text" name="first_name" value="<?php echo htmlspecialchars($patient_info_data['first_name']); ?>"></p>
+                                    <p><strong>Date of Birth: </strong><span><?php
+                                                                                $dateObject = new DateTime($patient_info_data['birthdate']);
+                                                                                $formattedDate = $dateObject->format('d-m-Y');
+                                                                                echo htmlspecialchars($formattedDate); ?></span></p>
+                                    <p><strong>Gender: </strong><span><?php echo htmlspecialchars($patient_info_data['gender']); ?></span></p>
+                                    <p><strong>Nationality: </strong><input type="text" name="nationality" value="<?php echo htmlspecialchars($patient_info_data['nationality']); ?>"></p>
+                                    <p><strong>Email Address: </strong><input type="email" name="email" value="<?php echo htmlspecialchars($patient_info_data['email']); ?>" style="width: 25%;" disabled></p>
+                                    <p><strong>Phone No.: </strong><input type="tel" name="mobile_phone" value="<?php echo htmlspecialchars($patient_info_data['mobile_phone']); ?>" disabled></p>
+                                    <p><strong>Address: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>License No.: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>Department: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>Position (role): </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>Username: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>Password: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+                                    <p><strong>Emergency Contact Name: </strong><input type="text" name="blood_group" value="<?php echo htmlspecialchars($patient_info_data['blood_group']); ?>" disabled></p>
+
+                                    <input type="hidden" name="patient_id" value="<?php echo htmlspecialchars($patient_info_data['id']); ?>">
+                                    <button type="button" class="btn btn-sm btn-primary" id="editPatientInfoBtn" name="editPatientInfoBtn"><i class="fa fa-user-pen me-2"></i>Edit Info</button>
+                                    <button type="submit" class="btn btn-sm btn-primary" id="updatePatientProfile" name="update_patient_profile" style="display: none; margin: 25px 0px 0px"><i class="fa fa-save me-2"></i>Save Changes</button>
+                                <?php else : ?>
+                                    <p>No patient information available.</p>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
